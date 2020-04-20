@@ -387,7 +387,7 @@ number = random.choice(list)
 
 Number will be a random element of the list.
 
-## Eceptions
+## Exceptions
 
 > Example of an error code:
 
