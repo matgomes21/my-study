@@ -1,2 +1,2 @@
-# my-study
+# My Study
 My programation studies.
