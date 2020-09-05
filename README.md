@@ -1,3 +1,2 @@
-# My Study :)
-## By: Mateus Gomes
-My programation studies.
+# My Study
+My programation studies :)
