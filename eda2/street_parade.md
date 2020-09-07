@@ -32,10 +32,22 @@ case.<br>
 # Example
 
 ## Input
+
 5<br>
 5 1 2 4 3<br>
 0
 
 ## Output
+
+yes
+
+<br>
+
+## Input2
+
+10
+1 2 10 5 4 3 7 6 8 9
+
+## Output2
 
 yes
