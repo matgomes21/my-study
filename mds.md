@@ -4,8 +4,9 @@ Minhas anotações sobre a matéria Métodos de Desenvolvimento de Software.
 
 ## Terça 08/09
 
-História de usuário X Casos de uso -> estariamos ainda escrevendo requisitos
-Nosso processo é fundamentalmente ágil mas usamos artefatos do RUP
+História de usuário X Casos de uso -> estariamos ainda escrevendo requisitos.
+
+Nosso processo é fundamentalmente ágil mas usamos artefatos do RUP.
 
 ## Quinta 10/09
 
@@ -18,7 +19,7 @@ Problemas das metodologias tradicionais:
 	* Rigidez das fases, assemelhando à manufatura.
  - Código fonte é mais um artefato.
 	* Desapegar do código :(
-	* Pode ser mudado radicalmente de uma semana para outra
+	* Pode ser mudado radicalmente de uma semana para outra.
 
 Uma das mudanças mais notáveis na forma de pensar desenvolvimento de software nos ultimos 15 anos: Metodologia Ágil
 
@@ -30,6 +31,6 @@ O Acordo Ágil:
 
 Time-to-market: Tempo ideal para conseguir lançar um produto no mercado. Concorrência!
 
-O Manifesto Ágil: Manifesto para o desenvolvimento ágil de software
+O Manifesto Ágil: Manifesto para o desenvolvimento ágil de software.
 
-Encontrar o balanço entre Software em funcionamento e documentação abrangente
+Encontrar o balanço entre Software em funcionamento e documentação abrangente.
