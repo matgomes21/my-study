@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 
 #define key(a) (a)
 #define less(x,y) (key(x)<key(y))
@@ -28,9 +29,13 @@ void quicksort(int *v, int l, int r){
 
 int main(){
 
-    int v[100000],n;
+    int *v,n;
 
-    for(n=0;scanf("%d",&v[n])==1;n++);
+    scanf("%d",&n);
+
+    v=malloc(n*sizeof(int));
+
+    for(int i=0;i<n;i++)scanf("%d",&v[i]);
 
     quicksort(v,0,n-1);
 

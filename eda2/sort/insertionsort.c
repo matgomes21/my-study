@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 
 #define key(a) (a)
 #define less(x,y) (key(x)<key(y))
@@ -21,14 +22,18 @@ void insertionSort(int *v, int l, int r){
 }
 
 int main(){
-    int v[50000],i;
+    int *v,n;
 
-    for(i=0;scanf("%d",&v[i])==1;i++);
+    scanf("%d",&n);
 
-    insertionSort(v,0,i-1);
+    v = malloc(n*sizeof(int));
 
-    for(int j=1;j<i;j++){
-        printf(" %d",v[j]);
+    for(int i=0;i<n;i++)scanf("%d",&v[i]);
+
+    insertionSort(v,0,n-1);
+
+    for(int i=1;i<n;i++){
+        printf(" %d",v[i]);
     }
     printf("\n");
 
