@@ -34,3 +34,60 @@ Time-to-market: Tempo ideal para conseguir lançar um produto no mercado. Concor
 O Manifesto Ágil: Manifesto para o desenvolvimento ágil de software.
 
 Encontrar o balanço entre Software em funcionamento e documentação abrangente.
+
+## Terça 15/09
+
+- Por que poucos valores no manifesto ágil?
+- Qual o papel das pessoas nesses 4 valores?
+
+**Princípio do manifesto ágil:**
+
+**Objetivo:** satisfazer o cliente entregando com frequência, sistemas com algum valor de negócio, "rodando em produção".
+
+- Entregar **versões funcionais** em **prazos curtos e frequente**;
+
+- **Mudanças** são um aspecto intrínseco da vida do software (pode ser requisitos, processos etc);
+
+- Software evolui para **atender ao negócio** (união dos mundos), esse é o motivo principal para o software evoluir;
+
+- Troca de informações através de conversas diretas.
+
+**Príncipios por trás do manifesto ágil**
+
+- Nossa maior prioridade é satisfazer o cliente, através da entrega adiantada e contínua de software de valor. **entrega contínua**
+
+- Aceitar mudanças de requisitos mesmo no fim do desenvolvimento. Processos ágeis se adequam a mudanças, para que o cliente possa tirar vantagens competitivas.
+
+- Entregar software funcionando com frequência, na escala de semanas até meses, com preferência aos períodos mais curtos.
+
+O que é software funcionando? Como garantir que o produto desenvolvido faz o que precisa ser feito? Com testes!
+
+- Pessoas relacionadas à negócios e desenvolvedores devem trabalhar em conjunto e diariamente, durante todo o curso do projeto. """ Este diariamente não é no sentidido literal, o recado importante é que o usuário deve estar junto com a equipde de desenvolvimento, com isso ele abraça mais o time, o projeto e proporciona a colaboração."""
+
+- Construir projetos ao redor de indivíduos motivados. Dando a eles o ambiente e suporte necessário, e **confiar** que farão seu trabalho. É necessário instigar a confiança e dar liberadade para o membro do time errar, mas que erre a partir de uma discussão e um entendimento feito com o time. 
+
+O que desmotiva num desenvolvimento de software?
+
+- O método mais eficiente e eficaz de transmitir informações para, e por dentro de um time de desenvolvimento, é através de uma conversa **cara a cara** (papo reto). Dar feedbacks e reconhecer erros a partir de conversas francas e procurar melhorar.
+
+É necessário criar uma relação de companherismo e profissionalismo em prol de um objetivo em comum.
+
+- **Software funcional** é a medida primário de progresso. O que da mais satisfação para o cliente é um software funcional para utilizar.
+
+- Processos ágeis promovem um ambiente sustentável. Os patrocinadores, desenvolvedores e usuários devem ser capazes de manter indefinidamente, passos constantes.
+
+- Contínua atenção à excelência técnica e bom design, aumenta a agilidade.
+
+- Simplicidade: a arte de maximizar a quantidade de trabalho que não precisou ser feito
+
+- As melhores arquiteturas, requisitos e designs emergem de times auto-organizáveis
+
+- Em intervalos regulares, o time reflete em como ficar mais efetivo, então, se ajustam e otimizam seu comportamento de acordo
+
+Qual o tempo para entregar uma funcionalidade? 1 semana, devido ao tempo de uma sprint.
+
+O que acontece se uma funcionalidade foi implementada no início de uma sprint? É necessário aguardar ate o final da mesma.
+
+Estamos delimitados pelo ciclo da sprint.
+
+Métodos Ágeis propõem o achatamento da curva de custo de mudanças em relação ao tempo.
