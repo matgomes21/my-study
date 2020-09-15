@@ -8,7 +8,9 @@ Este trabalho de Estrutura de Dados consiste em multiplicar uma Matriz Esparsa p
 
 Uma matriz é uma tabela de números. Matrizes são muito utilizadas para representar entidades que possuem essa característica, e muitas vezes também usadas na modelagem de diversos problemas. Por vezes, problemas são modelados por matrizes gigantescas, que em muitos casos nem cabem na memória de um computador. Entretanto, na maioria das vezes essas matrizes possuem muitos elementos nulos. Matrizes com essa característica recebem o nome de matrizes esparsas.Na prática, armazenar elementos nulos é um desperdício de memória. Por isso, há várias formas de se representar matrizes esparsas. Todas essas formas armazenam apenas os elementos não nulos da matriz.Uma das formas é chamada CSR (do inglês,Compressed Sparse Row). Uma das maneiras de se representar uma matriz no formato CSR é utilizando **listas encadeadas** da seguinte forma: um vetor de nós-cabeça corresponde a cada linha da matriz, e cada linha é uma lista encadeada contendo apenas os elementos não nulos da respectiva linha. Cada nó da lista encadeada possui o seguinte formato:
 
-``image1``
+<p align="center">
+    <img src='../img/matriz_esparsa1.png' />
+</p>
 
 Por exemplo, a matriz
 
@@ -20,11 +22,17 @@ Por exemplo, a matriz
 
 seria representada como
 
-``image2``
+<p align="center">
+    <img src='../img/matriz_esparsa2.png' />
+</p>
 
-Em aplicações práticas, um dos interesses básicos é efetuar um produto matriz-vetor. Dada uma matriz A de dimensão m×n e um vetor v de dimensão n, o produto matriz-vetor de A por v resulta num vetor w de dimensão m tal que
-    wi=n∑j=1Ai,j×vj,
-parai= 1,2, . . . , m. Esse produto, assim implementado, custa O(n²). Esse custo, para matrizes muito grandes, pode ser inviável na prática.
+Em aplicações práticas, um dos interesses básicos é efetuar um produto matriz-vetor. Dada uma matriz A de dimensão m×n e um vetor v de dimensão n, o produto matriz-vetor de A por v resulta num vetor w de dimensão m tal que,
+
+<p align="center">
+    <img src='../img/matriz_esparsa3.png' />
+</p>
+
+para i = 1,2, ... , m. Esse produto, assim implementado, custa O(n²). Esse custo, para matrizes muito grandes, pode ser inviável na prática.
 
 ### Tarefa
 
