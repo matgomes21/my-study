@@ -91,3 +91,29 @@ O que acontece se uma funcionalidade foi implementada no início de uma sprint? 
 Estamos delimitados pelo ciclo da sprint.
 
 Métodos Ágeis propõem o achatamento da curva de custo de mudanças em relação ao tempo.
+
+## Quinta 17/09
+
+O processo empírico:
+
+- Visibilidade;
+- Inspeção;
+- Adaptação -> Palavra que mais define a Metodologia Ágil, deve-se abraçar as mudanças e desapegar do código fonte.
+
+RUP não é flexivel, não da pra adaptar muito para suas necessidades.
+
+A visibilidade significa que aspectos do processo que afeta suas saídas deve, ser percebidas por aqueles que controlam o processo
+
+Uma funcionalidade **"pronta"**, significa:
+- Claramente projetada e codificada;
+- Refatorada;
+- Suite de testes automatizados (unitário, funcional,...);
+- Testes de aceitação;
+- Disponibilizada para uso em abiente de operação/produção.
+
+Pronto para metodos ágeis é rodando na mão do usuário.
+
+![Extreme Programming](http://www.extremeprogramming.org/)
+![XP Project](http://www.extremeprogramming.org/map/project.html)
+
+Engenheiro de Software que deve dizer as condições de limite e as melhores soluções para cada caso.
