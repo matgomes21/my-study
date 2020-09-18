@@ -113,7 +113,8 @@ Uma funcionalidade **"pronta"**, significa:
 
 Pronto para metodos ágeis é rodando na mão do usuário.
 
-![Extreme Programming](http://www.extremeprogramming.org/)
-![XP Project](http://www.extremeprogramming.org/map/project.html)
+[Extreme Programming](http://www.extremeprogramming.org/)
+
+[XP Project](http://www.extremeprogramming.org/map/project.html)
 
 Engenheiro de Software que deve dizer as condições de limite e as melhores soluções para cada caso.
