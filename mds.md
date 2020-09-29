@@ -4,9 +4,9 @@ Minhas anotações sobre a matéria Métodos de Desenvolvimento de Software.
 
 ## Terça 08/09
 
-História de usuário X Casos de uso -> estariamos ainda escrevendo requisitos.
+História de usuário X Casos de uso -> estariamos ainda escrevendo requisitos
 
-Nosso processo é fundamentalmente ágil mas usamos artefatos do RUP.
+Nosso processo é fundamentalmente ágil mas usamos artefatos do RUP
 
 ## Quinta 10/09
 
@@ -14,14 +14,14 @@ Problemas das metodologias tradicionais:
  - Predição: Tentar prever escopo, estimativas, comportamento para simulação;
  - Pouca interação com o cliente:
  	* Foi resolvido com o RUP?
- 	* No final de uma iteração deseja-se ter uma versão do produto.
+ 	-> No final de uma iteração deseja-se ter uma versão do produto.
  - Burocráticos?
-	* Rigidez das fases, assemelhando à manufatura.
+	-> Rigidez das fases, assemelhando à manufatura;
  - Código fonte é mais um artefato.
-	* Desapegar do código :(
-	* Pode ser mudado radicalmente de uma semana para outra.
+	-> Desapegar do código :(
+	-> Pode ser mudado radicalmente de uma semana para outra
 
-Uma das mudanças mais notáveis na forma de pensar desenvolvimento de software nos ultimos 15 anos: Metodologia Ágil
+Uma das mudanças mais notáveis na forma de pensar desenvolvimento de soft nos ultimos 15 anos Acordo Ágil
 
 O Acordo Ágil:
  - O porquê - Abraçar mudanças
@@ -31,9 +31,9 @@ O Acordo Ágil:
 
 Time-to-market: Tempo ideal para conseguir lançar um produto no mercado. Concorrência!
 
-O Manifesto Ágil: Manifesto para o desenvolvimento ágil de software.
+O Manifesto Ágil: Manifesto para o desenvolvimento ágil de software
 
-Encontrar o balanço entre Software em funcionamento e documentação abrangente.
+Encontrar balanço entre Software em funcionamento e documentação abrangente
 
 ## Terça 15/09
 
@@ -113,8 +113,74 @@ Uma funcionalidade **"pronta"**, significa:
 
 Pronto para metodos ágeis é rodando na mão do usuário.
 
-[Extreme Programming](http://www.extremeprogramming.org/)
-
-[XP Project](http://www.extremeprogramming.org/map/project.html)
+![Extreme Programming](http://www.extremeprogramming.org/)
+![XP Project](http://www.extremeprogramming.org/map/project.html)
 
 Engenheiro de Software que deve dizer as condições de limite e as melhores soluções para cada caso.
+
+## Terça 29/09
+
+**Extreme Programming XP**
+
+### Origens
+
+- Kent Back
+	- Extreme Programming eXplained
+- Don Wells
+	- Extreme Programming Perspectives
+- Destaque no OOPSLA 2000 (Splash: Conferência importante de programação)
+- O Case da Chrysler
+
+### Características
+
+- Para pequenos grupos
+- Para quem gosta de programar
+
+### Valores
+
+- Simplicidade -> Fazer um código simples e ir refatorando, como uma arquitetura robusta que suporta o desenvolvimento que está por vir
+- Feedback -> Comentar issue, etc
+- Respeito -> Não precisa ter amizade, mas respeito sempre
+- Comunicação -> Parear, ter contato humano
+- Coragem
+
+### As quatro variáveis
+
+O XP considera **quatro** as variáveis que estão presentes no desenvolvimento de um projeto (BECK, 2000):
+
+- Prioridade
+- Qualidade
+- Custo
+- Tempo
+
+### Interação entre as quatro variáveis
+
+- As variáveis **custo e tempo** normalmente são decisão do **cliente**, pois é dele a decisão sobre quando precisa do sistema implementado e qual o valor que está disposto a pagar por isto.
+- A variável qualidade não deve ser sacrificada/negociada!
+- Portanto, escopo aberto!
+	- Isto deve ficar claro desde o início do projeto, tanto para o cliente quanto para o time.
+
+### Papéis no XP
+
+#### Coach
+- Garante as regras do jogo (XP)
+- Normalmente o mais eXPeriente do grupo
+- Identifica quem é bom no que
+- Eventualmente compõe o pareamento
+- Não desenha a arquitetura, apenas chama atenção para oportunidades de melhora
+- Seu papel diminui à medida em que o time fica mais maduro
+
+### Tracker
+- Realiza medições no projeto
+	- Velocidade
+	- % cobertura de testes
+	- n. de testes funcionais definidos e funcionando
+	- n. de classes, métodos, LOC
+	- ...
+- Mantém o histórico de progresso
+- Promove a discussão com o time de desenvolvimento
+
+### Time Desenv.
+- Planeja, escreve e executa testes automatizados
+- Integra o código-fonte ao respositório
+- Modifica o projeto e a implementação de forma incremental, baseado na funcionalidade escolhida pelo cliente
