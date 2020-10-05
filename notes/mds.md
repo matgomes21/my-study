@@ -1,7 +1,8 @@
 # Métodos de Desenvolvimento de Software - Anotações
 
 Minhas anotações sobre a matéria Métodos de Desenvolvimento de Software.
-[repositório da matéria](https://github.com/fga-eps-mds/A-Disciplina)
+
+[Repositório da matéria](https://github.com/fga-eps-mds/A-Disciplina)
 
 ## Terça 08/09
 
