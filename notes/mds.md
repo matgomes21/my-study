@@ -2,8 +2,6 @@
 
 Minhas anotações sobre a matéria Métodos de Desenvolvimento de Software.
 
-[Repositório da matéria](https://github.com/fga-eps-mds/A-Disciplina)
-
 ## Terça 08/09
 
 História de usuário X Casos de uso -> estariamos ainda escrevendo requisitos
@@ -186,3 +184,60 @@ O XP considera **quatro** as variáveis que estão presentes no desenvolvimento 
 - Planeja, escreve e executa testes automatizados
 - Integra o código-fonte ao respositório
 - Modifica o projeto e a implementação de forma incremental, baseado na funcionalidade escolhida pelo cliente
+
+## Quinta 01/10
+
+### As 12 Práticas do XP
+❌
+1. ✅ Planejamento
+2. ✅ Fases Pequenas (Releases Curtas)
+3. ± Metáfora (Arquitetural)
+4. ❓ Projeto (Design) Simples
+5. ✅ Testes
+6. ❓ Refatoração
+7. ✅ Programação em Pares
+8. ✅ Propriedade Coletiva co Código
+9. ± Integração Contínua
+10. ✅ Semana de 40 horas
+11. ✅ Cliente junto aos desenvolvedores
+12. ✅ Padronização do código
+
+O **projeto** acaba no último dia de aula, e o **produto** depende do time. É possível continuar o produto após a disciplina.
+
+## Terça 13/10
+
+[ESEM](https://www.youtube.com/channel/UC58L7oO99Sawi2c_d6XYyGQ/videos)
+
+Cibse
+- [Geral](http://cibse2020.ppgia.pucpr.br/index.php/en-us/)
+- [Inscrição](https://pucpr.co1.qualtrics.com/jfe/form/SV_agELhKOd0wg6QZf)
+
+### Programação em pares (Prática do XP)
+
+- Erro de um detectado imediatamente pelo outro (grande economia de tempo)
+- Maior diversidade de ideias, técnicas e algoritmos
+- Enquanto um escreve, o outro pensa em contra-exemplos, problemas de eficiência, etc
+- Vergonha de escrever código feio (gambiarra) na frente do seu par
+- Pareamento de acordo com especialidades
+- Experimentos controlados mostraram que a qualidade do código produzido aumenta sem perda de velocidade (Laurie Williams)
+
+Programando sozinho:
+- Ficamos em um estado de hiperfoco
+- Programação é uma atividade intensa congnitiva
+
+### Propriedade Coletiva de Código
+
+- Modelo tradicional: só autor de uma função pode modificá-la
+- XP: o código pertence a todos
+- Se alguém identifica uma oportunidade para simplificar, consertar ou melhorar código escrito por outra pessoa, que o faça
+- Mas rode os testes!
+
+### Refatoração
+
+- Uma [pequena] modificação no sistema que não altera o seu comportamento funcional
+- Mas que melhora alguma característica da qualidade interna:
+	- Simplicidade
+	- Flexibilidade
+	- Legibilidade
+	- Compreensão
+	- Desempenho
