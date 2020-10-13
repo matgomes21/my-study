@@ -188,7 +188,7 @@ O XP considera **quatro** as variáveis que estão presentes no desenvolvimento 
 ## Quinta 01/10
 
 ### As 12 Práticas do XP
-❌
+
 1. ✅ Planejamento
 2. ✅ Fases Pequenas (Releases Curtas)
 3. ± Metáfora (Arquitetural)
