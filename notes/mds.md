@@ -241,3 +241,38 @@ Programando sozinho:
 	- Legibilidade
 	- Compreensão
 	- Desempenho
+
+## Quinta 15/10
+
+### Releases Curtos
+
+- Cada release deve ser tão "curta" quanto possível, procurando oferecer novos requisitos que gerem valor de negócio
+- Promove o desenvolvimento iterativo e incremental
+- Dias, semanas ou mês (não mais que isso!)
+
+### Testes Automatizados
+
+Mesmo tendo um bom nível de testes unitários, isso não garante a qualidade dos testes do produto. Um engenheiro de software não pode bater no peito e dizer que o switch de testes está ótima analisando apenas a cobertura de testes unitários.
+
+- Fundamento mais importante de XP
+- É o que dá segurança e coragem ao grupo
+- Testes de unidades (Unit tests)
+	- Escritos pelos programadores para testar cada elemento do sistema (p.ex., cada método em cada caso)
+- Testes de funcionalidades (Functional tests)
+	- Escritos pelos "clientes" para testar a funcionalidade do sistema (Testes de Aceitação)
+- Testes das unidades do sistema
+	- Tem que estar sempre funcionando a 100%
+	- São executados várias vezes por dia
+	- Executados à noite automaticamente
+- Testes das funcionalidades
+	- Vão crescendo de 0% a 100%
+	- Quando chegam a 100% acabou o projeto
+
+### Integração Contínua
+
+A prática da integração contínua é, integrar diferentes trechos de código no dia a dia do programador, e não apenas na véspera da release.
+
+- Código testado e integrado no repositório em horas, no máximo dia
+- Antecipa descoberta de possíveis defeitos em relação a estrutura do código
+- Os testes devem rodar 100% para que o código seja integrado
+- Servidor específico
