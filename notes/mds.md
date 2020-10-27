@@ -2,8 +2,6 @@
 
 Minhas anotações sobre a matéria Métodos de Desenvolvimento de Software.
 
-[Repositório da matéria](https://github.com/fga-eps-mds/A-Disciplina)
-
 ## Terça 08/09
 
 História de usuário X Casos de uso -> estariamos ainda escrevendo requisitos
@@ -186,3 +184,95 @@ O XP considera **quatro** as variáveis que estão presentes no desenvolvimento 
 - Planeja, escreve e executa testes automatizados
 - Integra o código-fonte ao respositório
 - Modifica o projeto e a implementação de forma incremental, baseado na funcionalidade escolhida pelo cliente
+
+## Quinta 01/10
+
+### As 12 Práticas do XP
+
+1. ✅ Planejamento
+2. ✅ Fases Pequenas (Releases Curtas)
+3. ± Metáfora (Arquitetural)
+4. ❓ Projeto (Design) Simples
+5. ✅ Testes
+6. ❓ Refatoração
+7. ✅ Programação em Pares
+8. ✅ Propriedade Coletiva co Código
+9. ± Integração Contínua
+10. ✅ Semana de 40 horas
+11. ✅ Cliente junto aos desenvolvedores
+12. ✅ Padronização do código
+
+O **projeto** acaba no último dia de aula, e o **produto** depende do time. É possível continuar o produto após a disciplina.
+
+## Terça 13/10
+
+[ESEM](https://www.youtube.com/channel/UC58L7oO99Sawi2c_d6XYyGQ/videos)
+
+Cibse
+- [Geral](http://cibse2020.ppgia.pucpr.br/index.php/en-us/)
+- [Inscrição](https://pucpr.co1.qualtrics.com/jfe/form/SV_agELhKOd0wg6QZf)
+
+### Programação em pares (Prática do XP)
+
+- Erro de um detectado imediatamente pelo outro (grande economia de tempo)
+- Maior diversidade de ideias, técnicas e algoritmos
+- Enquanto um escreve, o outro pensa em contra-exemplos, problemas de eficiência, etc
+- Vergonha de escrever código feio (gambiarra) na frente do seu par
+- Pareamento de acordo com especialidades
+- Experimentos controlados mostraram que a qualidade do código produzido aumenta sem perda de velocidade (Laurie Williams)
+
+Programando sozinho:
+- Ficamos em um estado de hiperfoco
+- Programação é uma atividade intensa congnitiva
+
+### Propriedade Coletiva de Código
+
+- Modelo tradicional: só autor de uma função pode modificá-la
+- XP: o código pertence a todos
+- Se alguém identifica uma oportunidade para simplificar, consertar ou melhorar código escrito por outra pessoa, que o faça
+- Mas rode os testes!
+
+### Refatoração
+
+- Uma [pequena] modificação no sistema que não altera o seu comportamento funcional
+- Mas que melhora alguma característica da qualidade interna:
+	- Simplicidade
+	- Flexibilidade
+	- Legibilidade
+	- Compreensão
+	- Desempenho
+
+## Quinta 15/10
+
+### Releases Curtos
+
+- Cada release deve ser tão "curta" quanto possível, procurando oferecer novos requisitos que gerem valor de negócio
+- Promove o desenvolvimento iterativo e incremental
+- Dias, semanas ou mês (não mais que isso!)
+
+### Testes Automatizados
+
+Mesmo tendo um bom nível de testes unitários, isso não garante a qualidade dos testes do produto. Um engenheiro de software não pode bater no peito e dizer que o switch de testes está ótima analisando apenas a cobertura de testes unitários.
+
+- Fundamento mais importante de XP
+- É o que dá segurança e coragem ao grupo
+- Testes de unidades (Unit tests)
+	- Escritos pelos programadores para testar cada elemento do sistema (p.ex., cada método em cada caso)
+- Testes de funcionalidades (Functional tests)
+	- Escritos pelos "clientes" para testar a funcionalidade do sistema (Testes de Aceitação)
+- Testes das unidades do sistema
+	- Tem que estar sempre funcionando a 100%
+	- São executados várias vezes por dia
+	- Executados à noite automaticamente
+- Testes das funcionalidades
+	- Vão crescendo de 0% a 100%
+	- Quando chegam a 100% acabou o projeto
+
+### Integração Contínua
+
+A prática da integração contínua é, integrar diferentes trechos de código no dia a dia do programador, e não apenas na véspera da release.
+
+- Código testado e integrado no repositório em horas, no máximo dia
+- Antecipa descoberta de possíveis defeitos em relação a estrutura do código
+- Os testes devem rodar 100% para que o código seja integrado
+- Servidor específico
