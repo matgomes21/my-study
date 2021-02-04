@@ -23,6 +23,51 @@ Veiculo *veiculos;
 
 int indexProprietarios=0, indexVeiculos=0;
 
+void iniciaArquivo() {
+    FILE *arquivoProprietarios = fopen("proprietarios.txt", "r");
+    FILE *arquivoVeiculos = fopen("veiculos.txt", "r");
+    int len = 200;
+
+    proprietarios = malloc(sizeof(Proprietario));
+    veiculos = malloc(sizeof(Veiculo));
+
+    for(indexProprietarios;fscanf(arquivoProprietarios," %[^\n]",proprietarios[indexProprietarios].cpf)>0; indexProprietarios++){
+        fscanf(arquivoProprietarios," %[^\n]",proprietarios[indexProprietarios].nome);
+        proprietarios = realloc(proprietarios, sizeof(Proprietario)*(indexProprietarios+2));
+    }
+
+    fclose(arquivoProprietarios);
+    fclose(arquivoVeiculos);
+}
+
+void insereArquivo () {
+    FILE *arquivoProprietarios = fopen("proprietarios.txt", "w");
+    FILE *arquivoVeiculos = fopen("veiculos.txt", "w");
+
+    for(int index=0;index<indexProprietarios;index++){
+        fprintf(arquivoProprietarios, "%s\n", proprietarios[index].cpf);
+        fprintf(arquivoProprietarios, "%s", proprietarios[index].nome);
+
+        if(index!=indexProprietarios-1)
+            fprintf(arquivoProprietarios, "\n");
+    }
+
+    for(int index=0;index<indexVeiculos;index++){
+        fprintf(arquivoVeiculos, "%s\n", veiculos[index].cpfProprietario);
+        fprintf(arquivoVeiculos, "%s\n", veiculos[index].placa);
+        fprintf(arquivoVeiculos, "%s\n", veiculos[index].marca);
+        fprintf(arquivoVeiculos, "%s\n", veiculos[index].modelo);
+        fprintf(arquivoVeiculos, "%d\n", veiculos[index].ano);
+        fprintf(arquivoVeiculos, "%s", veiculos[index].cor);
+
+        if(index!=indexVeiculos-1)
+            fprintf(arquivoVeiculos, "\n");
+    }
+
+    fclose(arquivoProprietarios);
+    fclose(arquivoVeiculos);
+}
+
 int verificaCpf(char *cpf) {
     for(int index=0;index<indexProprietarios;index++){
         if(strcmp(cpf, proprietarios[index].cpf)==0)return 1;
@@ -121,7 +166,7 @@ void cadastraVeiculo() {
             printf("Digite a placa do veículo (apenas letras maiúsculas e números): ");
             scanf(" %s",veiculo.placa);
 
-            if(strlen(veiculo.placa)>8)
+            if(strlen(veiculo.placa)!=8)
                 erroEntrada=1;
 
             for(int index=0;veiculo.placa[index]!='\0'&&erroEntrada==0;index++){
@@ -215,6 +260,7 @@ void mostraMenu() {
                     mostraDados();
                     break;
                 case '4':
+                    insereArquivo();
                     system("clear");
                     printf("Você escolheu sair, finalizando programa...\n");
                     break;
@@ -230,9 +276,7 @@ void mostraMenu() {
 
 
 int main(){
-    proprietarios = malloc(sizeof(Proprietario));
-    veiculos = malloc(sizeof(Veiculo));
-
+    iniciaArquivo();
 	mostraMenu();
 	
     return 0;
