@@ -23,32 +23,44 @@ Veiculo *veiculos;
 
 int indexProprietarios=0, indexVeiculos=0;
 
+// Abre os arquivos e popula os vetores de struct com os dados armazenados nos arquivos
 void iniciaArquivo() {
     FILE *arquivoProprietarios = fopen("proprietarios.txt", "r");
     FILE *arquivoVeiculos = fopen("veiculos.txt", "r");
-    int len = 200;
 
     proprietarios = malloc(sizeof(Proprietario));
     veiculos = malloc(sizeof(Veiculo));
 
-    for(indexProprietarios;fscanf(arquivoProprietarios," %[^\n]",proprietarios[indexProprietarios].cpf)>0; indexProprietarios++){
-        fscanf(arquivoProprietarios," %[^\n]",proprietarios[indexProprietarios].nome);
-        proprietarios = realloc(proprietarios, sizeof(Proprietario)*(indexProprietarios+2));
+    if(arquivoProprietarios!=NULL){
+        for(indexProprietarios;fscanf(arquivoProprietarios," %[^\n]",proprietarios[indexProprietarios].cpf)>0; indexProprietarios++){
+            fscanf(arquivoProprietarios," %[^\n]",proprietarios[indexProprietarios].nome);
+            proprietarios = realloc(proprietarios, sizeof(Proprietario)*(indexProprietarios+2));
+        }
+        fclose(arquivoProprietarios);
     }
-
-    fclose(arquivoProprietarios);
-    fclose(arquivoVeiculos);
+    if(arquivoVeiculos != NULL){
+        for(indexVeiculos;fscanf(arquivoVeiculos," %[^\n]",veiculos[indexVeiculos].cpfProprietario)>0; indexVeiculos++){
+            fscanf(arquivoVeiculos," %[^\n]",veiculos[indexVeiculos].placa);
+            fscanf(arquivoVeiculos," %[^\n]",veiculos[indexVeiculos].marca);
+            fscanf(arquivoVeiculos," %[^\n]",veiculos[indexVeiculos].modelo);
+            fscanf(arquivoVeiculos," %d",&veiculos[indexVeiculos].ano);
+            fscanf(arquivoVeiculos," %[^\n]",veiculos[indexVeiculos].cor);
+            veiculos = realloc(veiculos, sizeof(Veiculo)*(indexVeiculos+2));
+        }
+        fclose(arquivoVeiculos);
+    }
 }
 
+// Escreve os arquivos com os dados armazenados nos vetores de struct ao final do programa
 void insereArquivo () {
     FILE *arquivoProprietarios = fopen("proprietarios.txt", "w");
     FILE *arquivoVeiculos = fopen("veiculos.txt", "w");
 
-    for(int index=0;index<indexProprietarios;index++){
+    for(int index = 0; index < indexProprietarios; index++){
         fprintf(arquivoProprietarios, "%s\n", proprietarios[index].cpf);
         fprintf(arquivoProprietarios, "%s", proprietarios[index].nome);
 
-        if(index!=indexProprietarios-1)
+        if(index != indexProprietarios - 1)
             fprintf(arquivoProprietarios, "\n");
     }
 
@@ -60,7 +72,7 @@ void insereArquivo () {
         fprintf(arquivoVeiculos, "%d\n", veiculos[index].ano);
         fprintf(arquivoVeiculos, "%s", veiculos[index].cor);
 
-        if(index!=indexVeiculos-1)
+        if(index != indexVeiculos - 1)
             fprintf(arquivoVeiculos, "\n");
     }
 
@@ -68,39 +80,42 @@ void insereArquivo () {
     fclose(arquivoVeiculos);
 }
 
+// Verifica se o CPF já existe no armazenamento
 int verificaCpf(char *cpf) {
-    for(int index=0;index<indexProprietarios;index++){
-        if(strcmp(cpf, proprietarios[index].cpf)==0)return 1;
-    }
+    for(int index=0;index<indexProprietarios;index++)
+        if(strcmp(cpf, proprietarios[index].cpf) == 0)
+            return 1;
     return 0;
 }
 
+// Verifica se a placa do veículo já existe no armazenamento
 int verificaPlaca(char *placa) {
-    for(int index=0;index<indexVeiculos;index++){
-        if(strcmp(placa, veiculos[index].placa)==0)return 1;
-    }
+    for(int index = 0; index < indexVeiculos; index++)
+        if(strcmp(placa, veiculos[index].placa) == 0)
+            return 1;
     return 0;
 }
 
+// Cadastra um novo proprietário de veículo(s)
 void cadastraProprietario() {
     Proprietario proprietario;
     int erroEntrada;
 
-    proprietarios = realloc(proprietarios, sizeof(Proprietario)*(indexProprietarios+2));
+    proprietarios = realloc(proprietarios, sizeof(Proprietario) * (indexProprietarios + 2));
 
     system("clear");
 
-    printf("=====     Cadastrando Proprietário     =====\n");
+    printf("=======     CADASTRANDO PROPRIETÁRIO(A)     =======\n\n");
     do{
-        erroEntrada=0;
+        erroEntrada = 0;
         printf("Digite o cpf (apenas números): ");
         scanf(" %s",proprietario.cpf);
 
-        if(strlen(proprietario.cpf)>11){
-            erroEntrada=1;
+        if(strlen(proprietario.cpf) != 11){
+            erroEntrada = 1;
         }
-        for(int index=0;proprietario.cpf[index]!='\0'&&erroEntrada==0;index++){
-            if(proprietario.cpf[index]<48||proprietario.cpf[index]>57){
+        for(int index = 0; proprietario.cpf[index] != '\0' && erroEntrada == 0; index++){
+            if(proprietario.cpf[index] < 48 || proprietario.cpf[index] > 57){
                 erroEntrada=1;
             }
         }
@@ -109,12 +124,13 @@ void cadastraProprietario() {
     }while(erroEntrada);
 
     if(verificaCpf(proprietario.cpf)){
+        system("clear");
         printf("Cpf já cadastrado! Pressione enter para continuar...");
         getchar();
         scanf("%c",&enter);
     }
     else{
-        printf("\nDigite o nome completo: ");
+        printf("Digite o nome completo: ");
         scanf(" %[^\n]",proprietario.nome);
         
         proprietarios[indexProprietarios++] = proprietario;
@@ -126,57 +142,57 @@ void cadastraProprietario() {
     }
 }
 
+// Cadastra um novo veículo (deve ser possuir um proprietário)
 void cadastraVeiculo() {
     Veiculo veiculo;
 
     int erroEntrada;
 
-    veiculos = realloc(veiculos,sizeof(Veiculo)*(indexVeiculos+2));
+    veiculos = realloc(veiculos,sizeof(Veiculo) * (indexVeiculos + 2));
 
     system("clear");
 
-    printf("=====     Cadastrando Veículo     =====\n\n");
+    printf("=======     CADASTRANDO VEÍCULO     =======\n\n");
 
     do{
         erroEntrada=0;
         printf("Digite o cpf do proprietário (apenas números): ");
         scanf(" %s",veiculo.cpfProprietario);
 
-        if(strlen(veiculo.cpfProprietario)>11){
-            erroEntrada=1;
+        if(strlen(veiculo.cpfProprietario)!=11){
+            erroEntrada = 1;
         }
-        for(int index=0;veiculo.cpfProprietario[index]!='\0'&&erroEntrada==0;index++){
-            if(veiculo.cpfProprietario[index]<48||veiculo.cpfProprietario[index]>57){
-                erroEntrada=1;
-            }
-        }
+        for(int index = 0; veiculo.cpfProprietario[index] != '\0' && erroEntrada == 0; index++)
+            if(veiculo.cpfProprietario[index] < 48 || veiculo.cpfProprietario[index] > 57)
+                erroEntrada = 1;
         if(erroEntrada)
             printf("\nEntrada inválida! O CPF deve conter apenas números e possuir 11 dígitos, tente novamente.\nExemplo: 12345678910\n\n");
     }while(erroEntrada);
 
     if(!verificaCpf(veiculo.cpfProprietario)){
-        printf("Cpf não cadastrado! Cadastre o proprietário antes do veículo.\nPressione enter para continuar...");
+        system("clear");
+        printf("Cpf não encontrado! Cadastre o proprietário antes do veículo.\nPressione enter para continuar...");
         getchar();
         scanf("%c",&enter);
     }
     else{
         do{
-            erroEntrada=0;
+            erroEntrada = 0;
 
             printf("Digite a placa do veículo (apenas letras maiúsculas e números): ");
             scanf(" %s",veiculo.placa);
 
-            if(strlen(veiculo.placa)!=8)
-                erroEntrada=1;
+            if(strlen(veiculo.placa) != 7)
+                erroEntrada = 1;
 
-            for(int index=0;veiculo.placa[index]!='\0'&&erroEntrada==0;index++){
-                if(index<=3&&(veiculo.placa[index]<65||veiculo.placa[index]>90))
-                    erroEntrada=1;
-                else if(index>3&&(veiculo.placa[index]<48||veiculo.placa[index]>57))
+            for(int index = 0; veiculo.placa[index] != '\0' && erroEntrada == 0; index++){
+                if(index <= 2 && ( veiculo.placa[index] < 65 || veiculo.placa[index] > 90))
+                    erroEntrada = 1;
+                else if(index > 2 && (veiculo.placa[index] < 48 || veiculo.placa[index] > 57))
                     erroEntrada=1;
             }
             if(erroEntrada){
-                printf("\nEntrada inválida! A placa deve conter apenas letras maiúsculas e números e deve possuir 8 dígitos, tente novamente.\nExemplo: ABCD1234\n\n");
+                printf("\nEntrada inválida! A placa deve conter três letras maiúsculas e quatro números, tente novamente.\nExemplo: ABC1234\n\n");
             }
         }while(erroEntrada);
 
@@ -188,13 +204,22 @@ void cadastraVeiculo() {
         }
 
         else{
-            printf("Digite a marca do veículo: ");
+            printf("Digite a marca do veículo (Exemplo: Fiat): ");
             scanf(" %[^\n]",veiculo.marca);
-            printf("Digite o modelo do veículo: ");
+            printf("Digite o modelo do veículo (Exemplo: Uno): ");
             scanf(" %[^\n]",veiculo.modelo);
-            printf("Digite o ano do veículo (apenas números): ");
-            scanf(" %d",&veiculo.ano);
-            printf("Digite a cor do veículo: ");
+            do{
+                erroEntrada=0;
+                printf("Digite o ano do veículo (apenas números): ");
+                scanf(" %d",&veiculo.ano);
+
+                if(veiculo.ano > 2021 || veiculo.ano < 1870){
+                    erroEntrada=1;
+                    printf("\nEntrada inválida! Insira um ano entre 1870 e 2021.\n\n");
+                }
+
+            }while(erroEntrada);
+            printf("Digite a cor do veículo (Exemplo: Vermelho): ");
             scanf(" %[^\n]",veiculo.cor);
             
             veiculos[indexVeiculos++] = veiculo;
@@ -207,19 +232,22 @@ void cadastraVeiculo() {
     }
 }
 
+// Imprime todos os dados armazenados
 void mostraDados() {
     int veiculoNumero;
     system("clear");
-    for(int index=0;index<indexProprietarios;index++){
+
+    printf("======     DADOS CADASTRADOS     =======\n\n");
+    for(int index = 0; index < indexProprietarios; index++){
         veiculoNumero=0;
 
-        printf("* Proprietário %d\n    Nome: %s\n    CPF: %s\n\n",index+1,proprietarios[index].nome,proprietarios[index].cpf);
+        printf("Proprietário %d\n\n    Nome: %s\n    CPF: %s\n\n",index+1,proprietarios[index].nome,proprietarios[index].cpf);
 
-        printf("Seus veículos: \n\n");
+        printf("    Veículos: \n\n");
 
-        for(int aux=0;aux<indexVeiculos;aux++){
-            if(strcmp(proprietarios[index].cpf,veiculos[aux].cpfProprietario)==0){
-                printf("    Veículo %d\n",++veiculoNumero);
+        for(int aux=0; aux < indexVeiculos; aux++){
+            if(strcmp(proprietarios[index].cpf,veiculos[aux].cpfProprietario) == 0){
+                printf("    Carro %d\n",++veiculoNumero);
                 printf("    Placa: %s\n",veiculos[aux].placa);
                 printf("    Marca: %s\n",veiculos[aux].marca);
                 printf("    Modelo: %s\n",veiculos[aux].modelo);
@@ -233,21 +261,21 @@ void mostraDados() {
     scanf("%c",&enter);
 }
 
+// Menu inicial
 void mostraMenu() {
 	char opcao;
 
     do{        
         system("clear");
 
-        printf("=====     MENU    =====\n");
-        printf("(1) Cadastrar proprietário\n");
-        printf("(2) Cadastrar veículos\n");
-        printf("(3) Imprimir dados\n");
+        printf("=======     MENU    =======\n\n");
+        printf("(1) Cadastrar proprietário(a)\n");
+        printf("(2) Cadastrar veículo\n");
+        printf("(3) Mostrar dados\n");
         printf("(4) Sair\n");
-        printf("Escolha uma das opções: ");
+        printf("\nEscolha uma das opções: ");
 
         scanf(" %c",&opcao);
-
 
         switch(opcao) {
                 case '1':
@@ -274,8 +302,9 @@ void mostraMenu() {
     }   while(opcao!='4');
 }
 
-
+// Função main
 int main(){
+
     iniciaArquivo();
 	mostraMenu();
 	
