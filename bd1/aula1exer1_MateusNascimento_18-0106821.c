@@ -23,6 +23,63 @@ Veiculo *veiculos;
 
 int indexProprietarios=0, indexVeiculos=0;
 
+// Ordenação da bolha
+void ordenaProprietario(){
+    int index,aux,c;
+    Proprietario temp;
+    for(index=0;index<indexProprietarios-1;index++)
+        for(aux=0; aux<indexProprietarios-1;aux++){
+            for(c=0;c<11&&proprietarios[aux].cpf[c]==proprietarios[aux+1].cpf[c];c++);
+            if(proprietarios[aux+1].cpf[c]<proprietarios[aux].cpf[c]){
+                temp = proprietarios[aux];
+                proprietarios[aux] = proprietarios[aux+1];
+                proprietarios[aux+1] = temp;
+            }
+        }
+}
+
+// Ordenação da bolha
+void ordenaVeiculo(){
+    int index,aux,c;
+    Veiculo temp;
+    for(index=0;index<indexVeiculos-1;index++)
+        for(aux=0; aux<indexVeiculos-1;aux++){
+            for(c=0;c<8&&veiculos[aux].placa[c]==veiculos[aux+1].placa[c];c++);
+            if(veiculos[aux+1].placa[c]<veiculos[aux].placa[c]){
+                temp = veiculos[aux];
+                veiculos[aux] = veiculos[aux+1];
+                veiculos[aux+1] = temp;
+            }
+        }
+}
+
+// Verifica se o CPF já existe no armazenamento
+int verificaCpf(char *cpf) {
+    int index;
+    for(index=0;index<indexProprietarios;index++)
+        if(strcmp(cpf, proprietarios[index].cpf) == 0)
+            return 1;
+    return 0;
+}
+
+// Verifica se a placa do veículo já existe no armazenamento
+int verificaPlaca(char *placa) {
+    int index;
+    for(index = 0; index < indexVeiculos; index++)
+        if(strcmp(placa, veiculos[index].placa) == 0)
+            return 1;
+    return 0;
+}
+
+// Verifica sem o proprietário possui carros cadastrados
+int verificaProprietario(char *cpf) {
+    int index;
+    for(index=0; index<indexVeiculos; index++)
+        if(strcmp(veiculos[index].cpfProprietario,cpf) == 0)
+            return 1;
+    return 0;
+}
+
 // Abre os arquivos e popula os vetores de struct com os dados armazenados nos arquivos
 void iniciaArquivo() {
     FILE *arquivoProprietarios = fopen("proprietarios.txt", "r");
@@ -56,50 +113,35 @@ void insereArquivo () {
     FILE *arquivoProprietarios = fopen("proprietarios.txt", "w");
     FILE *arquivoVeiculos = fopen("veiculos.txt", "w");
 
-    for(int index = 0; index < indexProprietarios; index++){
-        fprintf(arquivoProprietarios, "%s\n", proprietarios[index].cpf);
-        fprintf(arquivoProprietarios, "%s", proprietarios[index].nome);
+    int index;
 
-        if(index != indexProprietarios - 1)
-            fprintf(arquivoProprietarios, "\n");
-    }
+    ordenaProprietario();
+    ordenaVeiculo();
 
-    for(int index=0;index<indexVeiculos;index++){
+    for(index = 0; index < indexProprietarios; index++)
+        if(verificaProprietario(proprietarios[index].cpf)){
+            fprintf(arquivoProprietarios, "%s\n", proprietarios[index].cpf);
+            fprintf(arquivoProprietarios, "%s\n", proprietarios[index].nome);
+        }
+
+    for(index=0;index<indexVeiculos;index++){
         fprintf(arquivoVeiculos, "%s\n", veiculos[index].cpfProprietario);
         fprintf(arquivoVeiculos, "%s\n", veiculos[index].placa);
         fprintf(arquivoVeiculos, "%s\n", veiculos[index].marca);
         fprintf(arquivoVeiculos, "%s\n", veiculos[index].modelo);
         fprintf(arquivoVeiculos, "%d\n", veiculos[index].ano);
-        fprintf(arquivoVeiculos, "%s", veiculos[index].cor);
-
-        if(index != indexVeiculos - 1)
-            fprintf(arquivoVeiculos, "\n");
+        fprintf(arquivoVeiculos, "%s\n", veiculos[index].cor);
     }
 
     fclose(arquivoProprietarios);
     fclose(arquivoVeiculos);
 }
 
-// Verifica se o CPF já existe no armazenamento
-int verificaCpf(char *cpf) {
-    for(int index=0;index<indexProprietarios;index++)
-        if(strcmp(cpf, proprietarios[index].cpf) == 0)
-            return 1;
-    return 0;
-}
-
-// Verifica se a placa do veículo já existe no armazenamento
-int verificaPlaca(char *placa) {
-    for(int index = 0; index < indexVeiculos; index++)
-        if(strcmp(placa, veiculos[index].placa) == 0)
-            return 1;
-    return 0;
-}
-
 // Cadastra um novo proprietário de veículo(s)
 void cadastraProprietario() {
     Proprietario proprietario;
     int erroEntrada;
+    int index;
 
     proprietarios = realloc(proprietarios, sizeof(Proprietario) * (indexProprietarios + 2));
 
@@ -114,7 +156,7 @@ void cadastraProprietario() {
         if(strlen(proprietario.cpf) != 11){
             erroEntrada = 1;
         }
-        for(int index = 0; proprietario.cpf[index] != '\0' && erroEntrada == 0; index++){
+        for(index = 0; proprietario.cpf[index] != '\0' && erroEntrada == 0; index++){
             if(proprietario.cpf[index] < 48 || proprietario.cpf[index] > 57){
                 erroEntrada=1;
             }
@@ -147,6 +189,7 @@ void cadastraVeiculo() {
     Veiculo veiculo;
 
     int erroEntrada;
+    int index;
 
     veiculos = realloc(veiculos,sizeof(Veiculo) * (indexVeiculos + 2));
 
@@ -162,7 +205,7 @@ void cadastraVeiculo() {
         if(strlen(veiculo.cpfProprietario)!=11){
             erroEntrada = 1;
         }
-        for(int index = 0; veiculo.cpfProprietario[index] != '\0' && erroEntrada == 0; index++)
+        for(index = 0; veiculo.cpfProprietario[index] != '\0' && erroEntrada == 0; index++)
             if(veiculo.cpfProprietario[index] < 48 || veiculo.cpfProprietario[index] > 57)
                 erroEntrada = 1;
         if(erroEntrada)
@@ -185,7 +228,7 @@ void cadastraVeiculo() {
             if(strlen(veiculo.placa) != 7)
                 erroEntrada = 1;
 
-            for(int index = 0; veiculo.placa[index] != '\0' && erroEntrada == 0; index++){
+            for(index = 0; veiculo.placa[index] != '\0' && erroEntrada == 0; index++){
                 if(index <= 2 && ( veiculo.placa[index] < 65 || veiculo.placa[index] > 90))
                     erroEntrada = 1;
                 else if(index > 2 && (veiculo.placa[index] < 48 || veiculo.placa[index] > 57))
@@ -234,18 +277,22 @@ void cadastraVeiculo() {
 
 // Imprime todos os dados armazenados
 void mostraDados() {
-    int veiculoNumero;
+    int veiculoNumero, index, aux;
+
+    ordenaProprietario();
+    ordenaVeiculo();
+
     system("clear");
 
     printf("======     DADOS CADASTRADOS     =======\n\n");
-    for(int index = 0; index < indexProprietarios; index++){
+    for(index = 0; index < indexProprietarios; index++){
         veiculoNumero=0;
 
         printf("Proprietário %d\n\n    Nome: %s\n    CPF: %s\n\n",index+1,proprietarios[index].nome,proprietarios[index].cpf);
 
         printf("    Veículos: \n\n");
 
-        for(int aux=0; aux < indexVeiculos; aux++){
+        for(aux=0; aux < indexVeiculos; aux++){
             if(strcmp(proprietarios[index].cpf,veiculos[aux].cpfProprietario) == 0){
                 printf("    Carro %d\n",++veiculoNumero);
                 printf("    Placa: %s\n",veiculos[aux].placa);
