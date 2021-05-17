@@ -27,27 +27,11 @@ void inicializa(int linhas, int colunas, matriz *m){
 void inserir(int linha, int coluna, int valor, matriz *m){
   no *anterior = m->valores[linha];
   no *atual = anterior->prox;
-
-  while(atual!=NULL&&atual->coluna<coluna){
-    anterior = atual;
-    atual = atual->prox;
-  }
-  if(atual==NULL||atual->coluna>coluna){
-    if(valor!=0){
-      no *novo = malloc(sizeof(no));
-      novo->coluna = coluna;
-      novo->valor = valor;
-      novo->prox = atual;
-      anterior->prox = novo;
-    }
-  }
-  else{
-    if(valor!=0)atual->valor = valor;
-    else{
-      anterior->prox = atual->prox;
-      free(atual);
-    }
-  }
+  no *novo = malloc(sizeof(no));
+  novo->coluna = coluna;
+  novo->valor = valor;
+  novo->prox = atual;
+  anterior->prox = novo;
 }
 
 int main(){
