@@ -1,0 +1,123 @@
+.data
+	# 64 chars
+	chars: .byte 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9','+','/'
+	input: .space 64
+.text
+main:
+	li $v0,8
+	li $a1, 64	
+	la $a0, input
+	li $t0, 10
+	move $t2,$a0 
+	syscall
+	
+Run:
+	lb $t6, 0($t2) 
+	
+	beq $t6, $t0, Quebra
+	beq $t6, $t3, Quebra
+	
+	andi $t1, $t6, 0xFF
+	sll $t1, $t1, 8
+	move $t6, $zero
+	lb $t5, 1($t2)
+	
+	beq $t5, $t0, Clear
+	beq $t5, $t3, Clear
+
+If:
+	andi $t4, $t5, 0xFF
+	add $t1, $t1, $t4
+	
+	sll $t1, $t1, 8
+	
+	move $t5, $zero
+	lb $t8, 2($t2)
+	
+	beq $t8, $t0, Setup
+	beq $t8, $t3, Setup
+	
+	j Continue		
+		
+Clear:
+	li $t5, 0
+	li $t6, 1
+	
+	j If
+
+Setup:
+	add $t8, $zero, $zero
+	addi $t5, $t8, 1
+	
+Continue:
+	andi $t4, $t8, 0xFF
+	add $t1, $t1, $t4
+	
+	add $a0, $t1, $zero
+	add $t8, $t1, $zero
+	
+	jal If2
+	
+	li $t9, 3
+	add $t2, $t2, $t9
+	
+	j Run
+
+If2:
+	add $t7, $ra, $zero
+	srl $t1, $t8, 18
+	andi $t1, $t1, 0x3F
+	
+	jal Caracter
+	
+	srl $t1, $t8, 12
+	andi $t1, $t1, 0x3F
+	
+	jal Caracter
+	
+	bnez $t6, Calculo3
+	andi $t1, $t8, 0xFC0
+	srl $t1, $t1, 6
+	
+	jal Caracter
+	
+Calculo2:
+	bnez $t5, Calculo1
+	andi $t1, $t8, 0x3F
+	jal Caracter
+	move $ra, $t7
+	jr $ra
+	
+Calculo1:
+	li $v0, 11
+	li, $a0,61
+	syscall
+	
+	move $ra, $t7
+	jr $ra	
+
+
+				
+Calculo3:
+	li $v0, 11
+	li $t9, 61
+	add $a0, $t9, $zero
+	syscall
+	j Calculo2
+	
+Quebra:
+	li $v0, 11
+	li $a0, 10
+	syscall
+
+Fim:
+	li $v0, 10
+	syscall
+
+Caracter:
+	li $v0, 11
+	lb $a0, chars($t1)
+	syscall
+	
+	jr $ra
+		

@@ -1,0 +1,108 @@
+# Aluno1: Vinícius de Sousa Saturnino 18/0132245
+# Aluno2: Juliana Pereira Valle Gonçalves 18/0124099
+
+.data
+	frase: .space 32
+	brkln: .asciiz "\n"
+	charSet: .asciiz "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+	
+.text 
+main:
+	li $v0,8
+	li $a1, 32
+	la $a0, frase 
+	move $t1,$a0 	
+	syscall
+	addi $t0,$zero, 10
+	j laco				
+
+label1:
+	addi $t2,$zero, 0
+	li $t6, 1
+	j laco2	
+
+label2:
+	li $t8, 0
+	addi $t2,$zero, 1
+	j label3
+
+label3:
+	andi $t5, $t8, 0xFF
+	add $t4, $t4, $t5
+	move $a0, $t4
+	move $t8, $t4
+	jal label4
+	addi $t1, $t1, 3
+	j laco	
+	
+label4:
+	add $t7, $ra, $zero
+	srl $t4, $t8, 18
+	andi $t4, $t4, 0x3F
+	jal saida
+	srl $t4, $t8, 12
+	andi $t4, $t4, 0x3F
+	jal saida
+	bnez $t6, label5
+	andi $t4, $t8, 0xFC0
+	srl $t4, $t4, 6
+	jal saida
+	j label7
+
+label5:
+	li $v0, 11
+	addi $a0, $zero, 61
+	syscall
+	j label7
+			
+label6:
+	li $v0, 11
+	li, $a0,61
+	syscall
+	move $ra, $t7
+	jr $ra
+	
+label7:
+	bnez $t2, label6
+	andi $t4, $t8, 0x3F
+	jal saida
+	move $ra, $t7
+	jr $ra		
+
+laco:
+	lb $t6, 0($t1)
+	beq $t6, $t3, printBrkln
+	beq $t6, $t0, printBrkln
+	andi $t4, $t6, 0xFF
+	sll $t4, $t4, 8
+	li $t6, 0
+	lb $t2, 1($t1)
+	beq $t2, $t0, label1
+	beq $t2, $t3, label1
+	j laco2
+	
+laco2:
+	andi $t5, $t2, 0xFF
+	add $t4, $t4, $t5
+	sll $t4, $t4, 8
+	li $t2, 0
+	lb $t8, 2($t1)
+	beq $t8, $t0, label2
+	beq $t8, $t3, label2
+	j label3
+
+printBrkln:
+	li $v0, 4
+	la $a0, brkln
+	syscall
+	j sair
+
+saida:
+	li $v0, 11
+	lb $a0, charSet($t4)
+	syscall
+	jr $ra	
+	
+sair:
+	li $v0, 10
+	syscall

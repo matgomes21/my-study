@@ -1,0 +1,129 @@
+.data
+	endl: .asciiz "\n"
+	sadd: .asciiz "ADD: "
+	ssub: .asciiz "SUB: "
+	sand: .asciiz "AND: "
+	sor: .asciiz "OR: "
+	sxor: .asciiz "XOR: "
+	ssll: .asciiz "SLL(3): "
+	ssrl: .asciiz "SRL(1): "
+
+.text
+main:
+	# leitura dos dois inteiros
+	li $v0, 5
+	syscall
+	move $t0, $v0
+	
+	li $v0, 5
+	syscall
+	move $t1, $v0
+	
+	# soma
+	add $t2, $t0, $t1
+	
+	li $v0, 4
+	la $a0, sadd
+	syscall
+	
+	li $v0, 1
+	move $a0, $t2
+	syscall
+	
+	li $v0, 4
+	la $a0, endl
+	syscall
+	
+	# subtração
+	sub $t2, $t0, $t1
+	
+	li $v0, 4
+	la $a0, ssub
+	syscall
+	
+	li $v0, 1
+	move $a0, $t2
+	syscall
+	
+	li $v0, 4
+	la $a0, endl
+	syscall
+	
+	# and
+	and $t2, $t0, $t1
+	
+	li $v0, 4
+	la $a0, sand
+	syscall
+	
+	li $v0, 1
+	move $a0, $t2
+	syscall
+	
+	li $v0, 4
+	la $a0, endl
+	syscall
+	
+	# or
+	or $t2, $t0, $t1
+	
+	li $v0, 4
+	la $a0, sor
+	syscall
+	
+	li $v0, 1
+	move $a0, $t2
+	syscall
+	
+	li $v0, 4
+	la $a0, endl
+	syscall
+	
+	# xor
+	xor $t2, $t0, $t1
+	
+	li $v0, 4
+	la $a0, sxor
+	syscall
+	
+	li $v0, 1
+	move $a0, $t2
+	syscall
+	
+	li $v0, 4
+	la $a0, endl
+	syscall
+	
+	# sll
+	sll  $t2, $t0, 3
+	
+	li $v0, 4
+	la $a0, ssll
+	syscall
+	
+	li $v0, 1
+	move $a0, $t2
+	syscall
+	
+	li $v0, 4
+	la $a0, endl
+	syscall
+	
+	# srl
+	srl $t2, $t1, 1
+	
+	li $v0, 4
+	la $a0, ssrl
+	syscall
+	
+	li $v0, 1
+	move $a0, $t2
+	syscall
+	
+	li $v0, 4
+	la $a0, endl
+	syscall
+	
+	# sair
+	li $v0, 10
+	syscall

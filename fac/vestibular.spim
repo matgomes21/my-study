@@ -1,0 +1,78 @@
+.data
+	endl: .asciiz "\n"
+	user: .space 100
+	correct: .space 100
+	
+    
+.text 
+main:
+	# Tamanho máximo das strings lidas
+	li $a1, 100
+
+	# Leitura do inteiro n
+	li $v0, 5
+	syscall
+	
+	# Armazena n no registrador t0
+	move $t0, $v0
+
+	# Leitura do gabarito
+	li $v0, 8
+	la $a0, correct
+	syscall
+	
+	# Leitura das respostas do usuário
+	la $a0, user
+	syscall
+	
+	# Inicialização da pontuação do usuário
+	li $t3, 0
+	
+	# Armazenamento das strings nos registradores s0 e s1
+	la $s0, correct
+	la $s1, user
+	
+	# Função de loop
+	j loop
+	
+loop:
+	# Condição de parada do loop
+	beq $t0, $zero, exit
+	
+	# Armazenamento de cada char das strings
+	lb $t1,0($s0)
+	lb $t2,0($s1)
+
+	# Vai para o próximo char
+	addi $s0, $s0, 1
+	addi $s1, $s1, 1
+	
+	# Caso os chars forem iguais
+	beq $t1, $t2, equal
+	
+	# Subtração de 1 no inteiro n
+	sub $t0,$t0, 1
+	
+	# Volta para o início do loop
+	j loop
+
+equal:
+	# Adiciona 1 na pontuação do usuário
+	addi $t3, $t3, 1
+	sub $t0, $t0, 1
+	j loop
+	
+exit:
+	# Print da pontuação
+	li $v0, 1
+	move $a0, $t3
+	syscall
+	
+	# Print da quebra de linha
+	li $v0, 4
+	la $a0, endl
+	syscall
+	
+	# Exit
+	li $v0, 10
+	syscall

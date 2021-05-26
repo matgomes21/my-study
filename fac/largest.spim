@@ -1,0 +1,129 @@
+# Dupla
+# Nome: Mateus Gomes do Nascimento
+# Matrícula: 18/0106821
+
+# Nome: Matheus Afonso de Souza
+# Matrícula: 18/0127641
+
+
+.data
+	endl: .asciiz "\n"
+	output: .asciiz "inverso = "
+	inputError: .asciiz "Entradas invalidas"
+	modError: .asciiz "O modulo nao eh primo"
+    
+.text 
+main:
+
+	# leitura do inteiro p
+   	li $v0, 5
+  	syscall
+   	move $t0, $v0
+   	
+   	# leitura do inteiro a
+   	li $v0, 5 
+  	syscall
+   	move $t1, $v0
+   	
+   	# caso a<=1
+   	slti $t2, $t1, 2
+   	beq $t2, 1, inputE
+   	
+   	# caso p<=1
+   	slti $t2, $t0, 2
+   	beq $t2, 1, inputE
+   	
+   	# caso a seja multiplo de p
+   	div $t1, $t0
+   	mfhi $t2
+   	beq $t2, 0, inputE
+   	
+   	# inicia contador em $t2
+   	li $t2, 2
+   	
+   	# função para verificar se p é primo
+   	j prime
+   	
+	
+inputE:
+	# print do erro de entrada
+	li $v0, 4
+	la $a0, inputError
+	syscall	
+	
+	# função de saída
+	j exit
+	
+prime:
+	# caso seja primo
+	mul $t5, $t2, $t2
+	slt $t5, $t5, $t0
+	beq $t5, 0, premod
+	
+	# modulo entre p e o contador
+	div $t0, $t2
+	mfhi $t3
+	
+	# caso não seja primo
+	beq $t3, 0, primeE
+	
+	# incrementa o contador
+	addi $t2, $t2, 1
+	
+	# loop
+	j prime
+	
+primeE:
+	# print do erro de primo
+	li $v0, 4
+	la $a0, modError
+	syscall	
+	
+	# função de saída
+	j exit
+	
+premod:
+	# reinicia contador
+	li $t2, 1
+	
+	# função de cálcular Inverso Multiplicativo Modular
+	j mod
+	
+mod:
+	# cálculo do Inverso Multiplicativo Modular
+	mul $t3, $t1, $t2
+	div $t3, $t0
+	mfhi $t3
+	
+	# caso ache a resposta
+	beq $t3, 1, modoutput
+	
+	# incrementa contador
+	addi $t2, $t2, 1
+	
+	# loop
+	j mod
+	
+modoutput:
+	# print da string de resposta
+	li $v0, 4
+	la $a0, output
+	syscall
+	
+	# print do numero de resposta
+	li $v0, 1
+	move $a0, $t2
+	syscall
+	
+	# função de saída
+	j exit
+
+exit:	
+	# print da quebra de linha
+	li $v0, 4
+	la $a0, endl
+	syscall
+	
+	#exit
+	li $v0, 10
+	syscall

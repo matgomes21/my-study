@@ -1,0 +1,269 @@
+$LC0:
+        .ascii  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123"
+        .ascii  "456789+/\000"
+
+base64Encoder:
+        addiu   $sp,$sp,-144
+        sw      $31,140($sp)
+        sw      $fp,136($sp)
+        move    $fp,$sp
+        sw      $4,144($fp)
+        sw      $5,148($fp)
+        lui     $2,%hi($LC0)
+        addiu   $3,$fp,64
+        addiu   $2,$2,%lo($LC0)
+        li      $4,65                 # 0x41
+        move    $6,$4
+        move    $5,$2
+        move    $4,$3
+        jal     memcpy
+        nop
+
+        li      $2,1000           # 0x3e8
+        move    $4,$2
+        jal     malloc
+        nop
+
+        sw      $2,56($fp)
+        sw      $0,28($fp)
+        sw      $0,32($fp)
+        sw      $0,36($fp)
+        sw      $0,40($fp)
+        sw      $0,52($fp)
+        sw      $0,44($fp)
+$L9:
+        lw      $3,44($fp)
+        lw      $2,148($fp)
+        nop
+        slt     $2,$3,$2
+        beq     $2,$0,$L2
+        nop
+
+        sw      $0,36($fp)
+        sw      $0,40($fp)
+        sw      $0,28($fp)
+        lw      $2,44($fp)
+        nop
+        sw      $2,48($fp)
+$L4:
+        lw      $3,48($fp)
+        lw      $2,148($fp)
+        nop
+        slt     $2,$3,$2
+        beq     $2,$0,$L3
+        nop
+
+        lw      $2,44($fp)
+        nop
+        addiu   $3,$2,2
+        lw      $2,48($fp)
+        nop
+        slt     $2,$3,$2
+        bne     $2,$0,$L3
+        nop
+
+        lw      $2,36($fp)
+        nop
+        sll     $2,$2,8
+        sw      $2,36($fp)
+        lw      $2,48($fp)
+        lw      $3,144($fp)
+        nop
+        addu    $2,$3,$2
+        lb      $2,0($2)
+        nop
+        move    $3,$2
+        lw      $2,36($fp)
+        nop
+        or      $2,$2,$3
+        sw      $2,36($fp)
+        lw      $2,40($fp)
+        nop
+        addiu   $2,$2,1
+        sw      $2,40($fp)
+        lw      $2,48($fp)
+        nop
+        addiu   $2,$2,1
+        sw      $2,48($fp)
+        b       $L4
+        nop
+
+$L3:
+        lw      $2,40($fp)
+        nop
+        sll     $2,$2,3
+        sw      $2,28($fp)
+        lw      $3,28($fp)
+        li      $2,3                        # 0x3
+        bne     $2,$0,1f
+        div     $0,$3,$2
+        break   7
+        mfhi    $2
+        sw      $2,32($fp)
+$L8:
+        lw      $2,28($fp)
+        nop
+        beq     $2,$0,$L5
+        nop
+
+        lw      $2,28($fp)
+        nop
+        slt     $2,$2,6
+        bne     $2,$0,$L6
+        nop
+
+        lw      $2,28($fp)
+        nop
+        addiu   $2,$2,-6
+        sw      $2,60($fp)
+        lw      $3,36($fp)
+        lw      $2,60($fp)
+        nop
+        sra     $2,$3,$2
+        andi    $2,$2,0x3f
+        sw      $2,24($fp)
+        lw      $2,28($fp)
+        nop
+        addiu   $2,$2,-6
+        sw      $2,28($fp)
+        b       $L7
+        nop
+
+$L6:
+        li      $3,6                        # 0x6
+        lw      $2,28($fp)
+        nop
+        subu    $2,$3,$2
+        sw      $2,60($fp)
+        lw      $3,36($fp)
+        lw      $2,60($fp)
+        nop
+        sll     $2,$3,$2
+        andi    $2,$2,0x3f
+        sw      $2,24($fp)
+        sw      $0,28($fp)
+$L7:
+        lw      $2,52($fp)
+        nop
+        addiu   $3,$2,1
+        sw      $3,52($fp)
+        move    $3,$2
+        lw      $2,56($fp)
+        nop
+        addu    $2,$2,$3
+        lw      $3,24($fp)
+        addiu   $4,$fp,24
+        addu    $3,$4,$3
+        lb      $3,40($3)
+        nop
+        sb      $3,0($2)
+        b       $L8
+        nop
+
+$L5:
+        lw      $2,44($fp)
+        nop
+        addiu   $2,$2,3
+        sw      $2,44($fp)
+        b       $L9
+        nop
+
+$L2:
+        li      $2,1                        # 0x1
+        sw      $2,44($fp)
+$L11:
+        lw      $3,44($fp)
+        lw      $2,32($fp)
+        nop
+        slt     $2,$2,$3
+        bne     $2,$0,$L10
+        nop
+
+        lw      $2,52($fp)
+        nop
+        addiu   $3,$2,1
+        sw      $3,52($fp)
+        move    $3,$2
+        lw      $2,56($fp)
+        nop
+        addu    $2,$2,$3
+        li      $3,61                 # 0x3d
+        sb      $3,0($2)
+        lw      $2,44($fp)
+        nop
+        addiu   $2,$2,1
+        sw      $2,44($fp)
+        b       $L11
+        nop
+
+$L10:
+        lw      $2,52($fp)
+        lw      $3,56($fp)
+        nop
+        addu    $2,$3,$2
+        li      $3,59                 # 0x3b
+        sb      $3,0($2)
+        lw      $2,56($fp)
+        move    $sp,$fp
+        lw      $31,140($sp)
+        lw      $fp,136($sp)
+        addiu   $sp,$sp,144
+        j       $31
+        nop
+
+$LC2:
+        .ascii  "Input string is : %s\012\000"
+$LC3:
+        .ascii  "Encoded string is : %s\012\000"
+$LC1:
+        .ascii  "alo mundo!\000"
+main:
+        addiu   $sp,$sp,-48
+        sw      $31,44($sp)
+        sw      $fp,40($sp)
+        move    $fp,$sp
+        lui     $2,%hi($LC1)
+        lw      $4,%lo($LC1)($2)
+        addiu   $3,$2,%lo($LC1)
+        lw      $3,4($3)
+        sw      $4,28($fp)
+        sw      $3,32($fp)
+        addiu   $2,$2,%lo($LC1)
+        lhu     $3,8($2)
+        nop
+        sh      $3,36($fp)
+        lbu     $2,10($2)
+        nop
+        sb      $2,38($fp)
+        li      $2,11                 # 0xb
+        sw      $2,24($fp)
+        lw      $2,24($fp)
+        nop
+        addiu   $2,$2,-1
+        sw      $2,24($fp)
+        addiu   $2,$fp,28
+        move    $5,$2
+        lui     $2,%hi($LC2)
+        addiu   $4,$2,%lo($LC2)
+        jal     printf
+        nop
+
+        addiu   $2,$fp,28
+        lw      $5,24($fp)
+        move    $4,$2
+        jal     base64Encoder
+        nop
+
+        move    $5,$2
+        lui     $2,%hi($LC3)
+        addiu   $4,$2,%lo($LC3)
+        jal     printf
+        nop
+
+        move    $2,$0
+        move    $sp,$fp
+        lw      $31,44($sp)
+        lw      $fp,40($sp)
+        addiu   $sp,$sp,48
+        j       $31
+        nop

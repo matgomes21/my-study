@@ -1,0 +1,10 @@
+multfac:
+	# zera o HI e LO
+	mthi $zero
+	mtlo $zero
+	
+	# adiciona os valores de HI e LO
+	madd $a0, $a1
+	
+	# retorno
+	jr $ra

@@ -1,0 +1,63 @@
+.data
+	stroverflow: .asciiz "overflow"
+	endl: .asciiz "\n"
+.text
+
+main:
+	# leitura do primeiro int
+	li $v0, 5 
+	syscall
+	move $t0, $v0
+
+	# leitura do numero a
+	li $v0, 5 
+	syscall
+	move $t1, $v0
+
+	# leitura do numbero b
+	li $v0, 5 
+	syscall
+	move $t2, $v0
+
+	# soma de a e b
+	addu $t3, $t1, $t2
+
+	# exponenciais
+	xor $t4, $t1, $t3
+	xor $t5, $t2, $t3
+	
+	# verifica se são iguais
+	and $t6, $t4, $t5
+
+	# se for menor que zero, entra em overflow
+	bltz $t6, overflow
+
+	# caso não dê overflow, print da soma
+	li $v0, 1
+	move $a0, $t3
+	syscall
+	
+	# print do endl
+	li $v0, 4
+	la $a0, endl
+	syscall
+    
+	j exit
+
+overflow:
+	# print 'overflow'
+	li $v0, 4
+	la $a0, stroverflow
+	syscall
+	
+	# print do endl
+	li $v0, 4
+	la $a0, endl
+	syscall
+    
+	j exit
+    
+exit:
+	# exit
+	li $v0, 10
+	syscall

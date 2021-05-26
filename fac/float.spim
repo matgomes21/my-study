@@ -1,0 +1,147 @@
+.data
+	plus: .asciiz "+"
+	minus: .asciiz "-"
+	zerox: .asciiz "0x"
+	hex:  .space  8
+	endl: .asciiz "\n"
+	
+.text
+main:
+	# leitura de float
+	li $v0, 6
+	syscall
+    
+    	# armazena o float em t0
+	mfc1 $t0 $f0
+
+	# manipulação do sinal
+	ori  $t1 $zero 0x1
+	sll  $t1 $t1 31 
+	and  $a0 $t0 $t1
+	srl  $a0 $a0 31
+    
+	addi $t2, $a0, 0
+    	
+    	# print float
+	li $v0, 2
+	mtc1 $t0, $f12
+	syscall
+	
+	# print endl
+	li $v0, 4
+	la $a0, endl
+	syscall
+	
+	# condicional para verificar se é positivo ou negativo
+	beq $t2, $zero, printplus
+	bne $t2, $zero, printminus
+
+printplus:
+	# print '+'
+	li $v0, 4
+	la $a0, plus
+	syscall
+	
+	# print endl
+	li $v0, 4
+	la $a0, endl
+	syscall
+   	
+   	# vai para a função main2
+	j main2
+
+printminus:
+	# print '-'
+	li $v0, 4
+	la $a0, minus
+	syscall
+	
+	# print endl
+	li $v0, 4
+	la $a0, endl
+	syscall
+   	
+   	# vai para a função main2
+	j main2
+
+main2:
+	# extração dos bits 23-30
+	ori  $t3 $zero 0xFF
+	sll  $t3 $t3 23
+	and  $a0 $t3 $t0
+	srl  $a0 $a0 23
+    	
+    	# bias 127
+	addi $a0, $a0, -127
+    	
+    	# print int
+	li $v0, 1
+	syscall
+    
+    	# print endl
+	li $v0, 4
+	la $a0, endl
+	syscall
+    
+    	# print '0x'
+	la $a0, zerox
+	syscall
+    
+	# extração dos bits 0-22
+	ori  $t3 $zero 0xFFFF
+	sll  $t3 $t3 7
+	ori  $t3 $t3 0x7F
+	and  $a0 $t3 $t0
+	j hexadecimal
+
+
+hexadecimal:
+	# empurra o registrador para a pilha  
+	sub $sp, $sp, 24
+	sw $a0, 0($sp)
+	sw $s0, 4($sp)
+	sw $s1, 8($sp)
+	sw $s2, 12($sp)
+	sw $s3, 16($sp)
+	sw $s4, 20($sp)
+	
+	move $s2, $a0
+	
+	# armazena a string hexadecimal
+	li $s0, 8
+	la $s3, hex
+	
+	# vai para hexwhile
+	j hexwhile
+
+hexwhile:
+	# começa com o dígito mais da esquerda
+	rol $s2, $s2, 4
+	and $s1, $s2, 0xf           # pega os 15 digitos em s2 e armazena os resultados em s1
+	ble $s1, 9, printhex        # se s1 <= 9, vá para o printhex
+	add $s1, $s1, 7             # se não,  s1 = s1 + 7 (A-F)
+
+printhex:
+	add $s1, $s1, 48            # Soma 48 (30 hex) para pegar o código ascii
+	sb $s1,($s3)                # Armazena o byte em s3
+	
+	add $s3, $s3, 1
+	add $s0, $s0, -1
+	
+	# se s0 != 0 , vá para hexwhile
+	bnez $s0, hexwhile
+    
+    	# print do resultado
+	la $a0, hex
+	li $v0, 4
+	syscall
+
+	# print endl
+	#li $v0, 4
+	#la $a0, endl
+	#syscall
+
+	# exit
+	li $v0, 10
+	syscall 
+	

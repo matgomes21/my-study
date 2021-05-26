@@ -1,0 +1,61 @@
+.data
+	endl: .asciiz "\n"
+	overflow: .asciiz "overflow"
+.text
+
+main:
+
+# ===================
+
+    li $v0, 5 
+    syscall
+    
+    move $t0, $v0
+    
+    li $v0, 5 
+    syscall
+    
+    move $t1, $v0
+    
+    li $v0, 5 
+    syscall
+    
+    move $t2, $v0
+    
+    addu $t3, $t1, $t2
+    
+    xor $t4, $t1, $t3
+    xor $t5, $t2, $t3
+    and $t6, $t4, $t5
+    
+    bltz $t6, overflowfunc
+
+    #printagem
+    li $v0, 1
+    move $a0, $t3
+    syscall
+    
+    j exit
+    
+    
+
+# =================== BYE!
+     
+# minha rotina
+
+overflowfunc:
+    li $v0, 4
+    la $a0, overflow
+    syscall
+    
+    j exit
+    
+exit:
+    
+#printagem da quebra
+    li $v0, 4
+    la $a0, endl
+    syscall
+    
+    li $v0, 10          # system call for exit
+    syscall               # we are out of here.

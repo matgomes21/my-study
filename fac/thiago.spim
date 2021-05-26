@@ -1,0 +1,162 @@
+#Dupla: Nicolas Georgeos Mantzos (170051277) e Thiago Luiz de Souza Gomes (180028324)
+#Códigos de inspiração: 
+	# https://www.geeksforgeeks.org/encode-ascii-string-base-64-format/
+	# https://gist.github.com/chrisveness/e121cffb51481bd1c142
+.data
+	quebraLinhaVar: .word 0
+	myCharacter: .byte 'a'
+	userInput: .space 20
+	entrada: .space 100
+	aux: .space 50
+	caracteres: .byte 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9','+','/'
+	
+	
+.text
+	main:
+		li $v0,8	
+		la $a0, entrada 	
+		
+		li $a1, 100	
+		move $s1,$a0 	
+		syscall
+		# $t0, 4
+		# $t6, 8
+		# li, $s8, 8	
+		li $s2, 10
+		#li $v0, 1 
+		#prepara o sistema para printar um inteiro
+		#lw $a0, age	
+		lb $s3, quebraLinhaVar
+	while:
+		lb $s6, 0($s1) 
+		beq $s6, $s2, fimWhile
+		# li $v0, 4
+		
+		beq $s6, $s3, fimWhile
+		
+		andi $s4, $s6, 0xFF
+		# la $a0, myCharacter
+		
+		sll $s4, $s4, 8
+		addi $s6, $zero, 0
+		# $t0, 4
+		# $t6, 8
+		# li, $s8, 8	
+		lb $s5, 1($s1)
+		
+		
+		beq $s5, $s2, vx32
+		beq $s5, $s3, vx32
+	countN:
+		andi $t5, $s5, 0xFF
+		
+		add $s4, $s4, $t5
+		# $t0, 4
+		# li, $s8, 8
+		# $t6, 8
+		# $t6, 8
+		# li $v0, 4
+		# la $a0, myCharacter
+		sll $s4, $s4, 8
+		
+		
+		addi $s5, $zero, 0
+		lb $s7, 2($s1)
+		# $t0, 4
+		# li, $s8, 8
+		# $t6, 8
+		beq $s7, $s2, b87
+		beq $s7, $s3, b87
+	vx64:
+		andi $t5, $s7, 0xFF
+		# $t0, 4
+		# li, $s8, 8
+		# $t6, 8
+		add $s4, $s4, $t5
+		
+		# li $v0, 4
+		# la $a0, myCharacter
+		
+		addi $a0, $s4, 0
+		addi $s7, $s4, 0
+		
+		jal c64
+		# li, $s8, 8
+		addi $s1, $s1, 3
+		j while
+		# li, $s8, 8
+	vx32:
+		addi $s5, $zero, 0
+		
+		addi $s6, $zero, 1
+		j countN
+	b87:
+		addi $s7, $zero, 0
+		
+		addi $s5, $zero, 1
+		j vx64	
+	fimWhile:
+		jal quebraLinha
+		li $v0, 10 
+		# $t0, 4
+		# li, $s8, 8
+		# $t6, 8   
+		syscall         
+	c64:
+		addi $t9, $ra, 0
+		srl $s4, $s7, 18
+		andi $s4, $s4, 0x3F
+		
+		jal resultadoFinal
+    		srl $s4, $s7, 12
+    		# $t0, 4
+		
+		
+		andi $s4, $s4, 0x3F
+		# $t0, 4
+		jal resultadoFinal
+		bnez $s6, jCont2
+		
+		andi $s4, $s7, 0xFC0
+		# $t0, 4
+		srl $s4, $s4, 6
+		jal resultadoFinal
+		# li, $s8, 8
+	jCont:
+		bnez $s5, jCont3
+		andi $s4, $s7, 0x3F
+		jal resultadoFinal
+		
+		addi $ra, $t9, 0
+		jr $ra
+	jCont2:
+		li $v0, 11
+		
+		addi, $a0, $zero, 61
+		syscall
+		# li, $s8, 8
+		j jCont
+	jCont3:
+		li $v0, 11
+		addi, $a0, $zero, 61
+		syscall
+		
+		addi $ra, $t9, 0
+		jr $ra
+	resultadoFinal:
+		# $t0, 4
+		# li, $s8, 8
+		# $t6, 8
+		lb $a0, caracteres($s4)
+		li $v0, 11
+		# li, $s8, 8
+		# $t6, 8
+		syscall
+		
+		jr $ra
+	quebraLinha: 
+		li $v0, 11           
+		addi $a0, $zero, 10  
+		syscall              
+		
+		jr $ra               
