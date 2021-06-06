@@ -1,2 +1,2 @@
 # My Programming Studies
-By: Mateus Gomes
+College stuff and random studies :)
