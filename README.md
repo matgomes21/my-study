@@ -1,2 +1,2 @@
 # My Programming Studies
-College stuff and random studies :)
+University stuff and random studies :)
